@@ -7,6 +7,7 @@ const { notFound, errorHandler } = require("./middleware/errors");
 const allowedOrigins = [
   "https://maritimedomnion.vercel.app",
   "https://maritimedomnion-git-main-jatin-a166.vercel.app",
+  "https://maritimedomnion-cbelv8qc3-jatin-a166.vercel.app",
   "http://localhost:3001"
 ];
 
@@ -15,7 +16,17 @@ const allowedOrigins = [
 const app = express();
 app.disable("x-powered-by");
 app.use(cors({
-  origin: allowedOrigins,
+  origin: (origin, callback) => {
+    if (
+      !origin ||
+      origin.endsWith(".vercel.app") ||
+      origin === "http://localhost:3001"
+    ) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true
 }));
 app.use(express.json({ limit: "100kb" }));
