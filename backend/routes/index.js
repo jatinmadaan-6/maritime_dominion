@@ -1,0 +1,15 @@
+const router = require("express").Router();
+const auth = require("../controllers/authController");
+const fleet = require("../controllers/fleetController");
+const { authenticate, authorize } = require("../middleware/auth");
+router.post("/auth/signup", auth.signup); router.post("/auth/login", auth.login);
+router.use(authenticate);
+router.get("/vessels", authorize("admin", "officer", "viewer"), fleet.listVessels);
+router.post("/vessels", authorize("admin"), fleet.createVessel);
+router.get("/vessels/:id/passport", authorize("admin", "officer", "viewer"), fleet.passport);
+router.get("/logs", authorize("admin", "officer", "viewer"), fleet.listLogs);
+router.post("/logs", authorize("admin", "officer"), fleet.addLog);
+router.get("/captains", authorize("admin", "officer", "viewer"), fleet.listCaptains);
+router.post("/captains", authorize("admin"), fleet.addCaptain);
+router.post("/assignments", authorize("admin"), fleet.assignCaptain);
+module.exports = router;

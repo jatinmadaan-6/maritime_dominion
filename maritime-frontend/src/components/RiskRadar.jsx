@@ -1,0 +1,3 @@
+export default function RiskRadar({ fleetRisk }) {
+  return <section className="surface risk-radar"><div className="radar-heading"><div><p className="eyebrow">PRIORITY QUEUE</p><h2>The watchlist</h2></div><p>Each score considers logged violations and the highest sulfur reading against the 0.5% IMO threshold.</p></div>{fleetRisk.slice(0, 5).map(v => <div className="risk-line" key={v.id}><span>{v.name}<small>{v.logCount} logs recorded</small></span><div className="risk-track"><i className={v.score >= 70 ? "high" : v.score >= 35 ? "medium" : "low"} style={{ width: `${v.score}%` }} /></div><b>{v.score.toFixed(0)}</b></div>)}</section>;
+}
