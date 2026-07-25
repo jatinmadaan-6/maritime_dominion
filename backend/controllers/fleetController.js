@@ -1,0 +1,10 @@
+const fleet = require("../services/fleetService");
+const handle = (fn, status = 200) => async (req, res, next) => { try { res.status(status).json(await fn(req)); } catch (err) { next(err); } };
+exports.listVessels = handle(() => fleet.listVessels());
+exports.createVessel = handle(req => fleet.createVessel(req.body), 201);
+exports.passport = handle(req => fleet.passport(req.params.id));
+exports.listLogs = handle(() => fleet.listLogs());
+exports.addLog = handle(req => fleet.addLog(req.body), 201);
+exports.listCaptains = handle(() => fleet.listCaptains());
+exports.addCaptain = handle(req => fleet.addCaptain(req.body), 201);
+exports.assignCaptain = handle(req => fleet.assignCaptain(req.body), 201);
