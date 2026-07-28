@@ -20,6 +20,7 @@ services:
       DB_PASSWORD: ${MYSQL_ROOT_PASSWORD:-maritime_dev}
       DB_NAME: maritime
       JWT_SECRET: ${JWT_SECRET:-change-this-in-production}
+      BOOTSTRAP_ADMIN_EMAIL: ${BOOTSTRAP_ADMIN_EMAIL:-}
       PORT: 3000
       CORS_ORIGIN: http://localhost:3001
     ports: ["3000:3000"]

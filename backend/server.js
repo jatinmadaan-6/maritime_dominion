@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const routes = require("./routes");
+const { ensureBootstrapAdmin } = require("./services/authService");
 const { notFound, errorHandler } = require("./middleware/errors");
 
 const allowedOrigins = [
@@ -36,4 +37,8 @@ app.use(notFound);
 app.use(errorHandler);
 
 const port = Number(process.env.PORT || 3000);
-app.listen(port, () => console.log(`Maritime Dominion API listening on ${port}`));
+async function start() {
+  await ensureBootstrapAdmin();
+  app.listen(port, () => console.log(`Maritime Dominion API listening on ${port}`));
+}
+start().catch(err => { console.error("Unable to start API", err); process.exit(1); });

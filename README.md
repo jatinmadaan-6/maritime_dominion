@@ -283,7 +283,7 @@ erDiagram
 <<<<<<< HEAD
 New sign-ups receive the `officer` role. Promote an administrator directly in MySQL for local demonstrations: `UPDATE users SET role = 'admin' WHERE email = 'you@example.com';`.
 =======
-New sign-ups receive the `officer` role. Set `BOOTSTRAP_ADMIN_EMAIL` in `backend/.env` to the email of the first administrator **before that user signs up**. That account can then use the dashboard's **Access control** page to change other members' roles. This endpoint is restricted to administrators; members cannot elevate their own access. If an existing local installation has no administrator, use the one-time recovery command: `UPDATE users SET role = 'admin' WHERE email = 'you@example.com';`, then sign out and back in.
+New sign-ups receive the `officer` role. Set `BOOTSTRAP_ADMIN_EMAIL` to the email of the first administrator. On every API startup, the matching registered account is promoted to `admin`, including an account that already exists. That account can then use the dashboard's **Access control** page to change other members' roles. This endpoint is restricted to administrators; members cannot elevate their own access. For Docker Compose deployments, define `BOOTSTRAP_ADMIN_EMAIL` beside `JWT_SECRET` in the deployment environment, then redeploy and sign out/in.
 >>>>>>> master
 
 ## One-command setup

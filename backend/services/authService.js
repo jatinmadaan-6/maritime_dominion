@@ -35,4 +35,13 @@ async function updateRole(id, role, actorId) {
   const [[user]] = await db.execute("SELECT id, name, email, role, created_at FROM users WHERE id = ?", [id]);
   return { ...user, message: "Access level updated. The user will receive the new permissions when they next sign in." };
 }
-module.exports = { signup, login, listUsers, updateRole };
+
+async function ensureBootstrapAdmin() {
+  const email = process.env.BOOTSTRAP_ADMIN_EMAIL?.trim().toLowerCase();
+  if (!email) return;
+  const [result] = await db.execute("UPDATE users SET role = 'admin' WHERE email = ?", [email]);
+  if (result.affectedRows) console.log(`Bootstrap administrator enabled for ${email}`);
+  else console.warn(`BOOTSTRAP_ADMIN_EMAIL does not match a registered user: ${email}`);
+}
+
+module.exports = { signup, login, listUsers, updateRole, ensureBootstrapAdmin };
