@@ -5,9 +5,22 @@ import Dashboard from "./components/Dashboard";
 import MarketingPage from "./components/MarketingPage";
 import "./App.css";
 
+function getStoredUser() {
+  const token = localStorage.getItem("token");
+  if (!token) return null;
+  try {
+    const encoded = token.split(".")[1].replace(/-/g, "+").replace(/_/g, "/");
+    const payload = JSON.parse(atob(encoded.padEnd(encoded.length + (4 - encoded.length % 4) % 4, "=")));
+    return { id: payload.id, name: payload.name, email: payload.email, role: payload.role, token };
+  } catch {
+    localStorage.removeItem("token");
+    return null;
+  }
+}
+
 export default function App() {
   const [page, setPage] = useState(() => window.location.pathname.slice(1) || "landing");
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(getStoredUser);
 
   const handleAuth = (userData) => {
     setUser(userData);
