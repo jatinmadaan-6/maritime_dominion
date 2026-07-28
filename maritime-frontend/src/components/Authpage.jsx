@@ -39,7 +39,7 @@ export default function AuthPage({ onAuth }) {
       }
 
       localStorage.setItem("token", data.token);
-      onAuth({ name: data.name, email: data.email, role: data.role, token: data.token });
+      onAuth({ id: data.id, name: data.name, email: data.email, role: data.role, token: data.token });
     } catch (err) {
       setError("Cannot connect to server. Is backend running?");
       setLoading(false);

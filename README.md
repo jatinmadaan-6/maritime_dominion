@@ -280,7 +280,11 @@ erDiagram
 | `officer` | Yes | Yes | No |
 | `admin` | Yes | Yes | Yes |
 
+<<<<<<< HEAD
 New sign-ups receive the `officer` role. Promote an administrator directly in MySQL for local demonstrations: `UPDATE users SET role = 'admin' WHERE email = 'you@example.com';`.
+=======
+New sign-ups receive the `officer` role. Set `BOOTSTRAP_ADMIN_EMAIL` in `backend/.env` to the email of the first administrator **before that user signs up**. That account can then use the dashboard's **Access control** page to change other members' roles. This endpoint is restricted to administrators; members cannot elevate their own access. If an existing local installation has no administrator, use the one-time recovery command: `UPDATE users SET role = 'admin' WHERE email = 'you@example.com';`, then sign out and back in.
+>>>>>>> master
 
 ## One-command setup
 
@@ -299,6 +303,11 @@ All protected resources are versioned under `/api/v1`.
 | Method | Endpoint | Minimum role |
 | --- | --- | --- |
 | POST | `/auth/signup`, `/auth/login` | Public |
+<<<<<<< HEAD
+=======
+| GET | `/users` | Admin |
+| PATCH | `/users/:id/role` | Admin |
+>>>>>>> master
 | GET / POST | `/vessels` | Viewer / Admin |
 | GET | `/vessels/:id/passport` | Viewer |
 | GET / POST | `/logs` | Viewer / Officer |

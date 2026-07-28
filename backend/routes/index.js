@@ -4,6 +4,8 @@ const fleet = require("../controllers/fleetController");
 const { authenticate, authorize } = require("../middleware/auth");
 router.post("/auth/signup", auth.signup); router.post("/auth/login", auth.login);
 router.use(authenticate);
+router.get("/users", authorize("admin"), auth.listUsers);
+router.patch("/users/:id/role", authorize("admin"), auth.updateRole);
 router.get("/vessels", authorize("admin", "officer", "viewer"), fleet.listVessels);
 router.post("/vessels", authorize("admin"), fleet.createVessel);
 router.get("/vessels/:id/passport", authorize("admin", "officer", "viewer"), fleet.passport);
